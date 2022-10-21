@@ -13,6 +13,7 @@ commands:
           when: on_fail
           command: |
             aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
+            aws s3 rm "s3://${OldBucketID}" --recursive
             aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
             exit 1
 
@@ -163,7 +164,6 @@ jobs:
           command: |
                 # echo [all] .circleci/ansible/inventory.txt
                 aws ec2 describe-instances \
-                \
                     --query 'Reservations[*].Instances[*].PublicIpAddress' \
                     --filters "Name=tag:Project,Values=udapeople" \
                     --output text >> .circleci/ansible/inventory.txt
