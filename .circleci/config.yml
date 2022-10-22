@@ -202,15 +202,15 @@ jobs:
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             sudo ./aws/install
-            exit 1
+           
       - run:
           name: Configure server
           command: |
             cd .circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml 
             exit 1
-      # Here's where you will add some code to rollback on failure      
 
+      -   destroy-environment
 #   run-migrations:
 #     docker:
 #       # Docker image here that supports NodeJS
