@@ -178,11 +178,10 @@ jobs:
       -   destroy-environment
 
   configure-infrastructure:
-    docker:
-      # Docker image here that supports Ansible
+    docker:   
+      - image: python:3.7-alpine3.11
     steps:
       - checkout
-      - image: python:3.7-alpine3.11
       - add_ssh_keys:
             # You can get this ID in the section where you registered the SSH Key
             fingerprints: ["aa:a7:a4:13:3f:7c:36:97:e7:6f:1e:21:84:bf:ac:0d"]
@@ -345,8 +344,8 @@ workflows:
           # filters:
           #   branches:
           #     only: [test-feature-branch]
-      # - configure-infrastructure:
-      #     requires: [deploy-infrastructure]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
       # - run-migrations:
       #     requires: [configure-infrastructure]
       # - deploy-frontend:
