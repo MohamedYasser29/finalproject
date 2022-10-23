@@ -197,7 +197,7 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update tar gzip 
-            RUN apk add --no-cache \
+            apk add --no-cache \
                     python3 \
                     py3-pip \
                 && pip3 install --upgrade pip \
@@ -216,9 +216,9 @@ jobs:
       -   destroy-environment
 #   run-migrations:
 #     docker:
-#       # Docker image here that supports NodeJS
+#       # - image: cimg/node:13.11.0
 #     steps:
-#       # Checkout code from git
+#       # - checkout
 #       - run:
 #           name: Run migrations
 #           command: |
