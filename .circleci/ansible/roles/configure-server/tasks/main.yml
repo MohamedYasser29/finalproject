@@ -1,4 +1,11 @@
 ---
+- name: "Install nodejs  v13"
+  become: true
+  shell: |
+      curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+    
+
+
 - name: "update apt packages."
   become: true
   apt:
@@ -15,20 +22,13 @@
   apt:
     autoremove: yes
 
-- name: "install dependencies."
+- name: "install NodeJs and npm"
   become: true
   apt:
     name: ["nodejs", "npm"]
     state: latest
     update_cache: yes
 
-- name: "install python"
-  become: true
-  npm:
-    name: python
-    global: yes
-    production: yes
-    state: 3.7
 
 - name: "install pm2"
   become: true
