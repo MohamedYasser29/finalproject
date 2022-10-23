@@ -2,7 +2,11 @@
 - name: "Install nodejs  v13"
   become: true
   shell: |
-      curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+      curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+      sudo apt-get install -y nodejs
+      # Use n version manager to use Node.js v13.8.0
+      sudo npm install -g n
+      sudo n 13.8.0
     
 
 
@@ -22,12 +26,12 @@
   apt:
     autoremove: yes
 
-- name: "install NodeJs and npm"
-  become: true
-  apt:
-    name: ["nodejs", "npm"]
-    state: latest
-    update_cache: yes
+# - name: "install NodeJs and npm"
+#   become: true
+#   apt:
+#     name: ["nodejs", "npm"]
+#     state: latest
+#     update_cache: yes
 
 
 - name: "install pm2"
