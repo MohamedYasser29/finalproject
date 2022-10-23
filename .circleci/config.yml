@@ -183,7 +183,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-            # You can get this ID in the section where you registered the SSH Key              #apk add --update tar gzip 
+            # You can get this ID in the section where you registered the SSH Key 
             fingerprints: ["aa:a7:a4:13:3f:7c:36:97:e7:6f:1e:21:84:bf:ac:0d"]
       - attach_workspace:
           at: ~/
@@ -196,7 +196,8 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --no-cache add curl
+            apk add --update tar gzip 
+            apk --no-cache add curl
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             apk add --update awscli
