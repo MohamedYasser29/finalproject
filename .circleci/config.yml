@@ -245,7 +245,7 @@ jobs:
             fi
             exit 1
       -  destroy-environment 
-      -  revert-migrations
+      # -  revert-migrations
 
 #   deploy-frontend:
 #     docker:
