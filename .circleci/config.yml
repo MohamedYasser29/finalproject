@@ -226,8 +226,8 @@ jobs:
       - image: cimg/node:13.8.0
     steps:
       - checkout
-      # - restore_cache:
-      #     keys: [backend-dev]
+      - restore_cache:
+          keys: [backend-dev]
       - run:
            name: install aws-cli
            command: | 
