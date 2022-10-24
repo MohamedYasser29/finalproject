@@ -29,6 +29,7 @@ commands:
 #           # Add when this will run
 #           command: |
 #             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
+#             SUCCESS=$(curl --insecure  https://kvdb.io/GeE6wL8XdvZTbrr3ZfDaE2/migration_<< parameters.workflow_id >>)
 #             SUCCESS = 1
 #             if(( $SUCCESS==1 )); 
 #             then
@@ -225,8 +226,8 @@ jobs:
       - image: cimg/node:13.8.0
     steps:
       - checkout
-      - restore_cache:
-          keys: [backend-dev]
+      # - restore_cache:
+      #     keys: [backend-dev]
       - run:
            name: install aws-cli
            command: | 
