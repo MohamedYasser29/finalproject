@@ -20,6 +20,18 @@ commands:
         name: Install Ansible
         command: |
           python3 -m pip install --user ansible
+
+  install_nodejs:
+     description: install nodeejs
+     steps:
+       - run:
+          name: Install Nodejs
+          command: |
+            curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+            # Use n version manager to use Node.js v13.8.0
+            sudo npm install -g n
+            sudo n 13.8.0
           
   # Install_tar_utilities:
   #    description: Install tar utility
@@ -284,11 +296,12 @@ jobs:
 
   deploy-frontend:
     docker:
-     - image: cimg/node:13.11.0 # Docker image here that supports AWS CLI or amazon cli image
+     - image: cimg/python:3.10 #cimg/node:13.11.0 # Docker image here that supports AWS CLI or amazon cli image
     steps:
       - checkout
       - install_awscli
       - install_ansible
+      - install_nodejs
       - attach_workspace:
          at: ~/
       - run:
@@ -330,6 +343,7 @@ jobs:
       - checkout
       - install_awscli
       - install_ansible
+      - install_nodejs
       - add_ssh_keys:
             # You can get this ID in the section where you registered the SSH Key             apk add --update awscli
             fingerprints: ["aa:a7:a4:13:3f:7c:36:97:e7:6f:1e:21:84:bf:ac:0d"]
