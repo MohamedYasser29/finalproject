@@ -333,7 +333,7 @@ jobs:
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       # Here's where you will add some code to rollback on failure      
       # - destroy-environment
-      - revert-migrations
+      # - revert-migrations
                     
   deploy-backend:
     docker:
@@ -363,9 +363,12 @@ jobs:
             cd backend
             npm i
             npm run build
-            cd ..
-            # Zip the directory
-            tar -C backend -czvf artifact.tar.gz .
+            # cd ..
+            # # Zip the directory
+            # tar -C backend -czvf artifact.tar.gz .
+            tar -czf artifact.tar.gz dist/* package*
+            cd .circleci
+            cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files 
       - run:
           name: Deploy backend
           command: |
@@ -378,7 +381,7 @@ jobs:
             ansible-playbook -i inventory.txt deploy-backend.yml
       # Here's where you will add some code to rollback on failure 
       # - destroy-environment
-      - revert-migrations 
+      # - revert-migrations 
 
 #   smoke-test:
 #     docker:
