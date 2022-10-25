@@ -21,13 +21,13 @@ commands:
         command: |
           python3 -m pip install --user ansible
           
-  Install_tar_utilities:
-     description: Install tar utility
-     steps:
-      - run:
-          name: install tar
-          command: |
-            yum install -y tar gzip
+  # Install_tar_utilities:
+  #    description: Install tar utility
+  #    steps:
+  #     - run:
+  #         name: install tar
+  #         command: |
+  #           yum install -y tar gzip
 
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
