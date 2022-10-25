@@ -13,6 +13,22 @@ commands:
               unzip awscliv2.zip
               sudo ./aws/install
 
+  install_ansible:
+    description: Install Ansible
+    steps:
+     - run:
+        name: Install Ansible
+        command: |
+          python3 -m pip install --user ansible
+          
+  Install_tar_utilities:
+     description: Install tar utility
+     steps:
+      - run:
+          name: install tar
+          command: |
+            yum install -y tar gzip
+
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
@@ -272,19 +288,21 @@ jobs:
     steps:
       - checkout
       - install_awscli
+      - install_ansible
       - attach_workspace:
          at: ~/
-      # - run:
-          # name: Install dependencies
-          # command: |
-          #   # your code here
+      - run:
+          name: Install dependencies
+          command: |
+            cd frontend
+            npm install
       - run:
           name: Get backend url
           command: |
 
             export BACKEND_IP=$(aws ec2 describe-instances \
                     --query 'Reservations[*].Instances[*].PublicIpAddress' \
-                    --filters "Name=tag:project,Values=udapeople" \)
+                    --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "API_URL = ${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
@@ -304,22 +322,47 @@ jobs:
       - destroy-environment
       - revert-migrations
                     
-#   deploy-backend:
-#     docker:
-#       # Docker image here that supports Ansible
-#     steps:
-#       # Checkout code from git
-#       # Add ssh keys with fingerprint
-#       # attach workspace
-#       - run:
-#           name: Install dependencies
-#           command: |
-#             # your code here
-#       - run:
-#           name: Deploy backend
-#           command: |
-#             # your code here
-#       # Here's where you will add some code to rollback on failure  
+  deploy-backend:
+    docker:
+      # Docker image here that supports Ansible
+          - image: cimg/python:3.10
+    steps:
+      - checkout
+      - install_awscli
+      - install_ansible
+      - add_ssh_keys:
+            # You can get this ID in the section where you registered the SSH Key             apk add --update awscli
+            fingerprints: ["aa:a7:a4:13:3f:7c:36:97:e7:6f:1e:21:84:bf:ac:0d"]
+      - attach_workspace:
+         at: ~/       
+      - restore_cache:
+                keys: [backend-dev]
+      - run:
+          name: Install dependencies
+          command: |
+            cd backend
+            npm install
+
+      - run:
+          name: Package backened
+          command: |             
+            cd backend
+            npm i
+            npm run build
+            cd ..
+            # Zip the directory
+            tar -C backend -czvf artifact.tar.gz .
+      - run:
+          name: Deploy backend
+          command: |
+            
+            cd .circleci/ansible
+            echo "Contents  of the inventory.txt file is -------"
+            cat inventory.txt
+            ansible-playbook -i inventory.txt deploy-backend.yml
+      # Here's where you will add some code to rollback on failure 
+      - destroy-environment
+      - revert-migrations 
 
 #   smoke-test:
 #     docker:
@@ -404,8 +447,8 @@ workflows:
           requires: [deploy-infrastructure]
       - run-migrations:
           requires: [configure-infrastructure]
-      # - deploy-frontend:
-      #     requires: [run-migrations]
+      - deploy-frontend:
+          requires: [run-migrations]
       # - deploy-backend:
       #     requires: [run-migrations]
       # - smoke-test:
