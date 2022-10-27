@@ -13,8 +13,6 @@
   shell: |
     cd ~/backend-app
     npm i
-- name: "install pm2"
-  become: true
   npm:
     name: pm2
     global: yes
