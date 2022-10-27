@@ -14,12 +14,6 @@
     cd ~/backend-app
     npm i
 
-- name: "Installing pm2"
-  npm:
-    name: pm2
-    global: yes
-    production: yes
-    state: present
 
 - name: "Executing Node app with PM2"
   shell: |
