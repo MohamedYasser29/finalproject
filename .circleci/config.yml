@@ -66,7 +66,7 @@ commands:
     steps:
       - run:
           name: Revert migrations
-          # Add when this will runn
+          # Add when this will run
           command: |
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
             SUCCESS=$(curl --insecure  https://kvdb.io/GeE6wL8XdvZTbrr3ZfDaE2/migration_<< parameters.workflow_id >>)
@@ -220,37 +220,9 @@ jobs:
 
       -   destroy-environment
 
-  configure-infrastructure:
-    docker:   
-      - image: python:3.9-alpine3.16 #cimg/python:3.10 #python:3.7-alpine3.11  #amazon/aws-cli 
-    steps:
-      - checkout
-      - add_ssh_keys:
-            # You can get this ID in the section where you registered the SSH Key             apk add --update awscli
-            fingerprints: ["aa:a7:a4:13:3f:7c:36:97:e7:6f:1e:21:84:bf:ac:0d"]
-      - attach_workspace:
-          at: ~/
-        
-      - run:
-         name: Install Ansible
-         command: |
-                apk add --update ansible 
-
-      - run:
-          name: Install dependencies
-          command: |
-            apk add --update tar gzip 
-            apk --no-cache add curl
-            apk add --no-cache \
-                    python3 \
-                    py3-pip \
-                && pip3 install --upgrade pip \
-                && pip3 install --no-cache-dir \
-                    awscli \
-                && rm -rf /var/cache/apk/*
   # configure-infrastructure:
   #   docker:   
-  #     - image: cimg/python:3.10 #cimg/python:3.10 #python:3.7-alpine3.11  #amazon/aws-cli 
+  #     - image: python:3.9-alpine3.16 #cimg/python:3.10 #python:3.7-alpine3.11  #amazon/aws-cli 
   #   steps:
   #     - checkout
   #     - add_ssh_keys:
@@ -258,9 +230,37 @@ jobs:
   #           fingerprints: ["aa:a7:a4:13:3f:7c:36:97:e7:6f:1e:21:84:bf:ac:0d"]
   #     - attach_workspace:
   #         at: ~/
-  #     - install_awscli
-  #     - install_ansible
-  #     - install_nodejs   
+        
+  #     - run:
+  #        name: Install Ansible
+  #        command: |
+  #               apk add --update ansible 
+
+  #     - run:
+  #         name: Install dependencies
+  #         command: |
+  #           apk add --update tar gzip 
+  #           apk --no-cache add curl
+  #           apk add --no-cache \
+  #                   python3 \
+  #                   py3-pip \
+  #               && pip3 install --upgrade pip \
+  #               && pip3 install --no-cache-dir \
+  #                   awscli \
+  #               && rm -rf /var/cache/apk/*
+  configure-infrastructure:
+    docker:   
+      - image: cimg/python:3.10 #cimg/python:3.10 #python:3.7-alpine3.11  #amazon/aws-cli 
+    steps:
+      - checkout
+      - add_ssh_keys:
+            # You can get this ID in the section where you registered the SSH Key             apk add --update awscli
+            fingerprints: ["aa:a7:a4:13:3f:7c:36:97:e7:6f:1e:21:84:bf:ac:0d"]
+      - attach_workspace:
+          at: ~/
+      - install_awscli
+      - install_ansible
+      - install_nodejs   
            
       - run:
           name: Configure server
