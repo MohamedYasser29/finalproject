@@ -503,7 +503,7 @@ jobs:
       - install_ansible
       - install_nodejs 
       # - run:
-      #     name: Get old stack workflow id
+      #     name: Get old stack workflow id from past deployment
       #     command: |
       #       export OldWorkflowID=$(curl --insecure https://kvdb.io/GeE6wL8XdvZTbrr3ZfDaE2/oldworkflowid)
       #       echo OldWorkflowID: $OldWorkflowID
