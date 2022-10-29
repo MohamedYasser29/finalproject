@@ -493,7 +493,7 @@ jobs:
       - destroy-environment
       - revert-migrations
 
-cleanup:
+  cleanup:
     docker:
       # Docker image here that supports Ansible
      - image: cimg/python:3.10
