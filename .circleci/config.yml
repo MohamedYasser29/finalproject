@@ -505,7 +505,7 @@ jobs:
       - run:
           name: Get old stack workflow id
           command: |
-            oldid= $(curl --insecure https://kvdb.io/GeE6wL8XdvZTbrr3ZfDaE2/oldworkflowid)
+            export oldid=$(curl --insecure https://kvdb.io/GeE6wL8XdvZTbrr3ZfDaE2/oldworkflowid)
             echo OldWorkflowID: $oldid
             #echo CIRCLE_WORKFLOW_ID: ${CIRCLE_WORKFLOW_ID:0:7}    
             # export OldWorkflowID=$(aws cloudformation \
