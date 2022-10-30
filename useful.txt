@@ -1,3 +1,0 @@
-Useful links for the final project:
-
-https://github.com/m-ahmedy/CDOEND-Project-Guides/blob/master/Project-3/instructions/9-configure-infrastructure-stage.md#important-nodejs-installation-workaround
