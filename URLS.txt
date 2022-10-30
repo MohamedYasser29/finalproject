@@ -1,5 +1,5 @@
 Public Url to GitHub repository (not private) [URL01]     https://github.com/MohamedYasser29/finalproject
-Public URL for your S3 Bucket (aka, your green candidate front-end) [URL02]   http://udapeople-bda78a3.s3-website-us-east-1.amazonaws.com
-Public URL for your CloudFront distribution (aka, your blue production front-end) [URL03]   http://drd8sch613jfb.cloudfront.net
-Public URLs to deployed application back-end in EC2 [URL04]  ec2-54-164-135-213.compute-1.amazonaws.com
-Public URL to your Prometheus Server [URL05]  ec2-54-197-41-225.compute-1.amazonaws.com
+Public URL for your S3 Bucket (aka, your green candidate front-end) [URL02]   http://udapeople-5041b56.s3.amazonaws.com/index.html
+Public URL for your CloudFront distribution (aka, your blue production front-end) [URL03]   https://drd8sch613jfb.cloudfront.net
+Public URLs to deployed application back-end in EC2 [URL04]  ec2-54-166-205-79.compute-1.amazonaws.com
+Public URL to your Prometheus Server [URL05]  ec2-3-86-184-177.compute-1.amazonaws.com
